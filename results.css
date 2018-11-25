@@ -1,0 +1,38 @@
+@import url("reset.css");
+
+h1 {
+    font-size: 2em;
+    font-weight: bold;
+    margin: 30px auto;
+	text-align: center;
+}
+
+
+h3 {
+    font-size: 1.4em;
+    font-weight: bold;
+    margin: 10px auto 30px;
+	text-align: center;
+}
+
+
+h5 {
+    font-size: 1em;
+    font-weight: bold;
+    margin-top: 30px;
+}
+
+header, main {
+	width: 800px;
+	background-color: #eee;
+	margin: 30px auto;
+	padding: 10px 0;
+	border: 1px solid #bbb;
+	border-radius: 20px;
+	box-shadow: 5px 5px 20px #bbb;
+}
+
+header > div, main > div {
+	margin: 20px 50px;
+	width: 700px;
+}

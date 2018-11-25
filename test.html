@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Тест с вопросами</title>
+	<link rel="stylesheet" type="text/css" href="test.css">
+</head>
+
+
+<body>
+	<h1>Тест с вопросами</h1>
+
+	<div class="flexContainer">
+		<div class="directionsForwardBackward" title="Предыдущий (Ctrl + &larr;)">
+			<a href="#" id="buttonBackward"></a>
+			<br>
+			Ctrl + &larr;
+		</div>
+		<div class="tableContainer">
+			<table id="questionTable" border="1px"">
+				<thead>
+					<tr id="question">
+						<th colspan="2">Вопрос</th>
+					</tr>
+				</thead>
+				<tbody id="questionTBody">
+					<tr id="answer">
+						<td width="5%">
+							<input type="radio" name="RadioAnswer" value="">
+						</td>
+						<td width="95%">Вариант ответа</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="directionsForwardBackward" title="Следующий (Ctrl + &rarr;)">
+			<a href="#" id="buttonForward"></a>
+			<br>
+			Ctrl + &rarr;
+		</div>
+
+	</div>
+
+	<footer>
+		<button onclick="goToUserAuthenticanion(event);">Вернуться на страницу регистрации</button>
+		<button onclick="finishTest(event);">Закончить тестирование</button>
+	</footer>
+
+	<script type="text/javascript" src="questionList.js"></script>
+	<script type="text/javascript" src="test.js"></script>
+
+</body>
+</html>

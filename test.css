@@ -1,0 +1,128 @@
+@import url("reset.css");
+
+
+h1 {
+    font-size: 2em;
+    font-weight: bold;
+    margin: 30px auto;
+	text-align: center;
+}
+
+body > p {
+	text-align: center;
+}
+
+table, tr, th, td {
+	border: 1px solid black;
+	padding: 5px;
+}
+
+
+.flexContainer {
+	max-width: 900px;
+	margin: auto;
+	margin-top: 30px;
+	display: flex;
+	justify-content: center;	
+}
+
+.tableContainer {
+	width: calc(100% - 100px);
+	overflow: hidden;
+}
+
+.directionsForwardBackward {
+	margin: auto 0;
+	width: 50px;
+	font-size: 8pt;
+	text-align: center;
+}
+
+.directionsForwardBackward a {
+	display: block;
+	width: 15px;
+	height: 15px;
+	border-top: 3px solid black;
+	border-left: 3px solid black; 
+	margin: auto;
+}
+
+#buttonBackward {
+	transform: rotate(-45deg);
+}
+
+#buttonForward {
+	transform: rotate(135deg);
+}
+
+
+#questionTable {
+	border-collapse: collapse;
+	width: 100%;
+	animation-duration: 0.5s;
+	animation-timing-function: ease-out;
+}
+
+
+footer {
+	margin: 30px auto 0;
+	width: 600px;
+}
+
+button {
+	width: 250px;
+	margin: 0 24px;
+	height: 25px;
+}
+
+
+
+
+
+@keyframes animationRight {
+	0% {
+		transform: translate(100%);
+	}
+	100% {
+		transform: translate(0%);
+	}
+}
+
+@keyframes animationLeft {
+	0% {
+		transform: translate(-100%);
+	}
+	100% {
+		transform: translate(0%);
+	}
+}
+
+@keyframes shudderRight {
+	0% {
+		transform: translate(0%);
+	}
+	40% {
+		transform: translate(20%);
+	}
+	80% {
+		transform: translate(-5%);
+	}
+	100% {
+		transform: translate(0%);
+	}
+}
+
+@keyframes shudderLeft {
+	0% {
+		transform: translate(0%);
+	}
+	40% {
+		transform: translate(-20%);
+	}
+	80% {
+		transform: translate(5%);
+	}
+	100% {
+		transform: translate(0%);
+	}
+}
