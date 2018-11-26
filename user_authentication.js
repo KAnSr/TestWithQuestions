@@ -1,7 +1,7 @@
 "use strict";
 
 var userAuthentificationData = localStorage.getItem('userAuthentificationData');
-userAuthentificationData = userAuthentificationData !== null ? JSON.parse(userAuthentificationData) : {};
+userAuthentificationData = userAuthentificationData ? JSON.parse(userAuthentificationData) : {};
 
 var inputElements = document.querySelectorAll('.container form input[type="text"]');
 for (let i = 0; i < inputElements.length; i++) {
@@ -45,6 +45,7 @@ function submitForm(event) {
 	}
 
 	userAuthentificationData.startTime = new Date();
+	userAuthentificationData.finishTime = undefined;
 	localStorage.setItem('userAuthentificationData', JSON.stringify(userAuthentificationData));
 	open('test.html', '_self');
 }

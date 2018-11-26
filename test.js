@@ -3,7 +3,8 @@
 
 //Выведем информацию о пользователе, если она записана в localStorage
 var userAuthentificationData = localStorage.getItem('userAuthentificationData');
-userAuthentificationData = userAuthentificationData !== null ? JSON.parse(userAuthentificationData) : {eMail: ''};
+userAuthentificationData = userAuthentificationData ? JSON.parse(userAuthentificationData) : {eMail: ''};
+
 if (userAuthentificationData.eMail !== '') {
 	userAuthentificationData.startTime = new Date(userAuthentificationData.startTime);
 
@@ -14,7 +15,7 @@ if (userAuthentificationData.eMail !== '') {
 	document.querySelector('body').insertBefore(userDetailsElem, document.querySelector('.flexContainer'));
 
 	userDetailsElem = document.createElement('p');
-		userDetailsElem.innerHTML = 'Начало тестирования: ' +
+	userDetailsElem.innerHTML = 'Начало тестирования: ' +
 		('00' + userAuthentificationData.startTime.getDate()).slice(-2) + '.' +
 		('00' + userAuthentificationData.startTime.getMonth()).slice(-2) + '.' +
 		('0000' + userAuthentificationData.startTime.getFullYear()).slice(-4) + ' ' +
@@ -22,15 +23,71 @@ if (userAuthentificationData.eMail !== '') {
 		('00' + userAuthentificationData.startTime.getMinutes()).slice(-2) + ':' +
 		('00' + userAuthentificationData.startTime.getSeconds()).slice(-2);
 	document.querySelector('body').insertBefore(userDetailsElem, document.querySelector('.flexContainer'));
-
 }
 
+if (questionList.answerValues.eMail !== userAuthentificationData.eMail)
+	questionList.answerValues = {eMail: userAuthentificationData.eMail};
+
+
+
+//В drawQuestions у нас будет статусы и методы перерисовки списка вопросов
 var drawQuestions = {};
 
 drawQuestions.statusEnum = {static: 'Static', slideOld: 'Slide Old', slideNew: 'Slide New', shudder: 'Shudder'}; //Наши вопросы могут находиться в одном из 3-х состояний
 drawQuestions.status = drawQuestions.statusEnum.static;
 drawQuestions.directionsEnum = {initialize: 'Initialize', forward: 'Forward', backward: 'Backward', none: 'None'};
 drawQuestions.direction = drawQuestions.directionsEnum.initialize;
+
+
+drawQuestions.changeQuestion = function() {
+	let prevQIndex = questionList.qIndex;
+
+	switch (drawQuestions.direction) {
+		case drawQuestions.directionsEnum.backward:
+			questionList.qIndex--;
+			break;
+		case drawQuestions.directionsEnum.forward:
+			questionList.qIndex++;
+	}
+
+	questionList.qIndex = Math.max(questionList.qIndex, 0);
+	questionList.qIndex = Math.min(questionList.qIndex, questionList.length - 1);
+
+	if (drawQuestions.direction === drawQuestions.directionsEnum.initialize)
+		drawQuestions.slideNew();
+	else if (prevQIndex === questionList.qIndex)
+		drawQuestions.shudder();
+	else
+		drawQuestions.slideOld();
+}
+
+
+drawQuestions.redraw = function() {
+	document.getElementById('question').children[0].textContent = 'Вопрос (' + (questionList.qIndex + 1) + ' из ' + questionList.length + '): ' + questionList[questionList.qIndex].question;
+
+	 //Чистим содержимое таблицы от старого списка ответов
+	while (questionTBody.firstChild) {
+		questionTBody.removeChild(questionTBody.firstChild);
+	}
+
+	//Прочитаем ранее уже выбранный пользователем вариант ответа
+	let answerValue = questionList[questionList.qIndex].questionId in questionList.answerValues ? questionList.answerValues[questionList[questionList.qIndex].questionId] : undefined;
+
+	 //Рисуем новый список ответов
+	for (let i = 1; i <= questionList[questionList.qIndex].answersQuantity; i++) {
+		let currentAnswer = answerTemplate.cloneNode(true);
+
+		if (String(i) === answerValue)
+			currentAnswer.children[0].children[0].checked = true;
+
+		currentAnswer.children[0].children[0].value = i;
+		currentAnswer.children[0].children[0].addEventListener('change', radioChange);
+		currentAnswer.children[1].textContent = questionList[questionList.qIndex]['answer' + i];
+		currentAnswer.id = 'answer' + i;
+		currentAnswer.title = 'Вариант ответа №' + i + ' (' + i + ')';
+		questionTBody.appendChild(currentAnswer);
+	}
+}
 
 
 drawQuestions.slideOld = function(direction) {
@@ -75,69 +132,20 @@ drawQuestions.shudder = function() {
 }
 
 
-drawQuestions.redraw = function() {
-	document.getElementById('question').children[0].textContent = 'Вопрос (' + (questionList.qIndex + 1) + ' из ' + questionList.length + '): ' + questionList[questionList.qIndex].question;
 
-	 //Чистим содержимое таблицы от старого списка ответов
-	while (questionTBody.firstChild) {
-		questionTBody.removeChild(questionTBody.firstChild);
-	}
-
-	//Прочитаем ранее уже выбранный пользователем вариант ответа
-	let answerValue = questionList[questionList.qIndex].questionId in questionList.answerValues ? questionList.answerValues[questionList[questionList.qIndex].questionId] : undefined;
-
-	 //Рисуем новый список ответов
-	for (let i = 1; i <= questionList[questionList.qIndex].answersQuantity; i++) {
-		let currentAnswer = answerTemplate.cloneNode(true);
-
-		if (String(i) === answerValue)
-			currentAnswer.children[0].children[0].checked = true;
-
-		currentAnswer.children[0].children[0].value = i;
-		currentAnswer.children[0].children[0].addEventListener('change', radioChange);
-		currentAnswer.children[1].textContent = questionList[questionList.qIndex]['answer' + i];
-		currentAnswer.id = 'answer' + i;
-		currentAnswer.title = 'Вариант ответа №' + i + ' (' + i + ')';
-		questionTBody.appendChild(currentAnswer);
-	}
-}
-
-drawQuestions.draw = function() {
-	let prevQIndex = questionList.qIndex;
-	if (drawQuestions.direction !== drawQuestions.directionsEnum.initialize)
-
-
-	switch (drawQuestions.direction) {
-		case drawQuestions.directionsEnum.backward:
-			questionList.qIndex--;
-			break;
-		case drawQuestions.directionsEnum.forward:
-			questionList.qIndex++;
-	}
-
-
-	questionList.qIndex = Math.max(questionList.qIndex, 0);
-	questionList.qIndex = Math.min(questionList.qIndex, questionList.length - 1);
-
-	if (drawQuestions.direction === drawQuestions.directionsEnum.initialize)
-		drawQuestions.slideNew();
-	else if (prevQIndex === questionList.qIndex)
-		drawQuestions.shudder();
-	else
-		drawQuestions.slideOld();
-}
 
 
 var answerTemplate = document.getElementById('answer');
 var questionTBody = document.getElementById('questionTBody');
 
 
-drawQuestions.draw();
+drawQuestions.changeQuestion();
 
 document.getElementById('buttonBackward').addEventListener('click', buttonForwardBackward);
 document.getElementById('buttonForward').addEventListener('click', buttonForwardBackward);
 document.addEventListener('keyup', keyUpEvent);
 document.getElementById('questionTable').addEventListener('animationend', animationEnd);
+
 
 function animationEnd(event) {
 	questionTable.style.animationName = '';
@@ -151,15 +159,14 @@ function animationEnd(event) {
 }
 
 
-
-
 function buttonForwardBackward(event) {
 	event.preventDefault();
 	if (drawQuestions.status !== drawQuestions.statusEnum.static) return;
 
 	drawQuestions.direction = drawQuestions.directionsEnum[event.target.id.replace(new RegExp('button', 'i'), '').toLowerCase()];
-	drawQuestions.draw();
+	drawQuestions.changeQuestion();
 }
+
 
 function keyUpEvent(event) {
 	if ((event.key.toLowerCase() === 'arrowleft' || event.key.toLowerCase() == 'arrowright')
@@ -178,7 +185,7 @@ function keyUpEvent(event) {
 				drawQuestions.direction = drawQuestions.directionsEnum.none;
 		}
 
-		drawQuestions.draw();
+		drawQuestions.changeQuestion();
 	}
 	else if (Number(event.key) !== NaN
 		&& Number(event.key) >= 1
@@ -188,6 +195,7 @@ function keyUpEvent(event) {
 		questionList.storeAnswerValues();
 	}
 }
+
 
 function radioChange(event) {
 	questionList.answerValues[questionList[questionList.qIndex].questionId] = event.target.value;
@@ -199,8 +207,9 @@ function goToUserAuthenticanion(event) {
 	open('user_authentication.html', '_self');
 }
 
+
 function finishTest(event) {
 	userAuthentificationData.finishTime = new Date();
 	localStorage.setItem('userAuthentificationData', JSON.stringify(userAuthentificationData));
-	//open('test.html', '_self');
+	open('results.html', '_self');
 }

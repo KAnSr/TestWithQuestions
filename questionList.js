@@ -63,7 +63,7 @@ questionList.qIndex = 0; //Индекс текущего вопроса
 
 //В answerValues будем хранить выбранные пользователем ответы
 questionList.answerValues = localStorage.getItem('answerValues');
-questionList.answerValues = questionList.answerValues !== null ? JSON.parse(questionList.answerValues) : {};
+questionList.answerValues = questionList.answerValues ? JSON.parse(questionList.answerValues) : {eMail: ''};
 
 questionList.storeAnswerValues = function() {
 	localStorage.setItem('answerValues', JSON.stringify(questionList.answerValues));
