@@ -59,9 +59,9 @@ if (userAuthentificationData.eMail !== '') {
 	if (userAuthentificationData.finishTime) {
 		let totalTime = new Date(userAuthentificationData.finishTime - userAuthentificationData.startTime);	
 		newElem.innerHTML = newElem.innerHTML +
-			('00' + userAuthentificationData.finishTime.getUTCHours()).slice(-2) + ':' +
-			('00' + userAuthentificationData.finishTime.getUTCMinutes()).slice(-2) + ':' +
-			('00' + userAuthentificationData.finishTime.getUTCSeconds()).slice(-2);
+			('00' + totalTime.getUTCHours()).slice(-2) + ':' +
+			('00' + totalTime.getUTCMinutes()).slice(-2) + ':' +
+			('00' + totalTime.getUTCSeconds()).slice(-2);
 	}
 	else
 		newElem.innerHTML = newElem.innerHTML + '———';
