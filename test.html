@@ -28,7 +28,11 @@
 						<td width="5%">
 							<input type="radio" name="RadioAnswer" value="">
 						</td>
-						<td width="95%">Вариант ответа</td>
+						<td width="95%">
+							<label>
+								Вариант ответа
+							</label>
+						</td>
 					</tr>
 				</tbody>
 			</table>
@@ -42,8 +46,8 @@
 	</div>
 
 	<footer>
-		<button onclick="goToUserAuthenticanion(event);">Вернуться на страницу регистрации</button>
-		<button onclick="finishTest(event);">Закончить тестирование</button>
+		<button id="goToUserAuthenticanion" onclick="goToUserAuthenticanion(event);">Вернуться на страницу регистрации</button>
+		<button id="finishTest" onclick="finishTest(event);">Закончить тестирование</button>
 	</footer>
 
 	<script type="text/javascript" src="questionList.js"></script>

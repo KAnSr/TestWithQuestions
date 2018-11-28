@@ -1,5 +1,8 @@
 @import url("reset.css");
 
+body {
+	background: linear-gradient(to right, #ccc, #fff, white, white, white, #fff, #ccc);
+}
 
 h1 {
     font-size: 2em;
@@ -66,15 +69,24 @@ table, tr, th, td {
 
 footer {
 	margin: 30px auto 0;
-	width: 600px;
+	max-width: 600px;
 }
 
 button {
 	width: 250px;
 	margin: 0 24px;
-	height: 25px;
+	height: 30px;
+	border: 1px solid black;
+	border-radius: 10px;
 }
 
+#goToUserAuthenticanion {
+	background: linear-gradient(to right, #ffcccc, white, white, white, white, #ffcccc);
+}
+
+#finishTest {
+	background: linear-gradient(to right, #aaffaa, white, white, white, white, #aaffaa);
+}
 
 
 

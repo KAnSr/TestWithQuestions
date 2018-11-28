@@ -81,8 +81,10 @@ drawQuestions.redraw = function() {
 			currentAnswer.children[0].children[0].checked = true;
 
 		currentAnswer.children[0].children[0].value = i;
+		currentAnswer.children[0].children[0].id = 'radio' + i;
 		currentAnswer.children[0].children[0].addEventListener('change', radioChange);
-		currentAnswer.children[1].textContent = questionList[questionList.qIndex]['answer' + i];
+		currentAnswer.children[1].children[0].setAttribute('for', 'radio' + i);
+		currentAnswer.children[1].children[0].textContent = questionList[questionList.qIndex]['answer' + i];
 		currentAnswer.id = 'answer' + i;
 		currentAnswer.title = 'Вариант ответа №' + i + ' (' + i + ')';
 		questionTBody.appendChild(currentAnswer);

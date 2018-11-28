@@ -1,5 +1,9 @@
 @import url("reset.css");
 
+body {
+	background: linear-gradient(to right, #ccc, #fff, white, white, white, #fff, #ccc);
+}
+
 h1 {
     font-size: 2em;
     font-weight: bold;
@@ -13,28 +17,42 @@ label {
 }
 
 input[type="text"] {
-	width: 440px;
+	width: 430px;
 	height: 25px;
+	padding: 1px 5px;
+	border-radius: 10px;
+	border: 2px solid #bbb;
 }
 
 input[type="reset"], input[type="submit"] {
 	width: 250px;
 	margin: 0 24px;
 	margin-top: 30px;
-	height: 25px;
+	height: 30px;
+	border: 2px solid #bbb;
+	border-radius: 10px;
+	box-shadow: 5px 5px 20px #bbb;
+}
+
+input[type="reset"] {
+	background: linear-gradient(to right, #ffcccc, white, white, white, white, #ffcccc);
+}
+
+input[type="submit"] {
+	background: linear-gradient(to right, #aaffaa, white, white, white, white, #aaffaa);
 }
 
 .container {
-	width: 700px;
+	max-width: 700px;
 	background-color: #eee;
 	margin: auto;
 	padding: 10px 0;
-	border: 1px solid #bbb;
+	border: 2px solid #bbb;
 	border-radius: 20px;
 	box-shadow: 5px 5px 20px #bbb;
 }
 
 .container > form > div {
 	margin: 20px 50px;
-	width: 600px;
+	max-width: 600px;
 }
